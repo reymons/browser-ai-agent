@@ -4,8 +4,8 @@ An AI agent that automates browsing for you<br>
 Provide an input and see the result in the browser
 
 ## Implementation
-The AI Agent is implemented as a simple console application that handles a user's input and forwards it to OpenAI<br>
-Under the hood, it uses two AI models: Main and DOM ones<br>
+The AI Agent is implemented as a simple console application that handles user's input and forwards it to OpenAI which, then, performs certain actions on the page<br>
+Under the hood, it uses two AI models: Main and DOM ones, and playwright for browser automation<br>
 
 ## DOM agent
 Its main and only goal is to search for the requested elements on the page<br>
