@@ -3,6 +3,11 @@
 An AI agent that automates browsing for you<br>
 Provide an input and see the result in the browser
 
+## How to run
+```
+API_KEY=your_key node gent.js
+```
+
 ## Implementation
 The AI Agent is implemented as a simple console application that handles user's input and forwards it to OpenAI which, then, performs certain actions on the page<br>
 Under the hood, it uses two AI models: Main and DOM ones, and playwright for browser automation<br>
@@ -30,3 +35,4 @@ Currently supported actions are:<br>
 
 ## Security
 Main agent can detect any action that adds/deletes/changes some information and ask a user for the permission to perform it.
+
