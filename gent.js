@@ -512,10 +512,11 @@ class Logger {
 
 async function main() {
     const apiKey = process.env.API_KEY;
+    const chromeBinPath = process.env.CHROME_BIN_PATH
 
     state.browser = await chromium.launch({
         headless: false,
-        executablePath: "/usr/bin/google-chrome" // replace with your path,
+        executablePath: chromeBinPath
         args: ["--disable-gpu"],
     });
 

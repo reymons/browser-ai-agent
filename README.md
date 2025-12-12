@@ -5,7 +5,9 @@ Provide an input and see the result in the browser
 
 ## How to run
 ```
-API_KEY=your_key node gent.js
+export API_KEY=your_key
+export CHROME_BIN_PATH=/path/to/chrome
+node gent.js
 ```
 
 ## Implementation
