@@ -329,34 +329,23 @@ class AIAgent {
         };
     }
 
-    constructor({
-        input,
-        tools,
-        label = "Agent",
-        logger,
-        reasoning,
-        model,
-        apiKey,
-        onAddTool,
-        onAnswer,
-    }) {
-        this.initialInput = [...input];
-        this.input = [...this.initialInput];
-        this.tools = [...tools];
+    constructor(cfg) {
+        this.input = [...cfg.input];
+        this.tools = [...cfg.tools];
         this.lock = null;
         this.lockResolve = () => {};
-        this.label = label;
-        this.reasoning = reasoning;
-        this.model = model;
-        this.logger = logger;
+        this.label = cfg.label;
+        this.reasoning = cfg.reasoning;
+        this.model = cfg.model;
+        this.logger = cfg.logger;
         this.toolMap = {};
         this.tools = [];
-        this.ai = new OpenAI({ apiKey });
+        this.ai = new OpenAI({ apiKey: cfg.apiKey });
 
-        this.onAddTool = onAddTool;
-        this.onAnswer = onAnswer;
+        this.onAddTool = cfg.onAddTool;
+        this.onAnswer = cfg.onAnswer;
 
-        for (const tool of tools) {
+        for (const tool of cfg.tools) {
             this.toolMap[tool.schema.name] = tool.fn;
             this.tools.push(tool.schema);
         }
@@ -390,6 +379,7 @@ class AIAgent {
     }
 
     async ask(query) {
+        // In case we call the same agent twice, wait for other one to finish
         await this.lock;
 
         this.input.push(AIAgent.createUserInput(query));
