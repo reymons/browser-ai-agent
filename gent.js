@@ -14,16 +14,14 @@ const tools = {
         state.page.setDefaultTimeout(5000);
         await state.page.goto(url);
 
-        return { type: "input_text", text: "Website has been opened" };
+        return AIAgent.createTextResponseOutput("Website has been opened")
     },
 
     async takeWebsiteScreenshot() {
         const img = await state.page.screenshot("jpeg", 65);
+        const output = `data:image/jpeg;base64,${img.toString("base64")}`;
 
-        return {
-            type: "input_image",
-            image_url: `data:image/jpeg;base64,${img.toString("base64")}`,
-        };
+        return AIAgent.createTextResponseOutput(output)
     },
 
     async takeWebsiteSnapshot({ root = "body", includeRoot = false }) {
@@ -170,10 +168,7 @@ const tools = {
             { root: "body", includeRoot }
         );
 
-        return {
-            type: "input_text",
-            text: JSON.stringify(snapshot),
-        };
+        return AIAgent.createTextResponseOutput(JSON.stringify(snapshot));
     },
 
     async clickElement({ selector }) {
@@ -185,17 +180,17 @@ const tools = {
             state.page = await state.ctx.waitForEvent("page", { timeout: 500 });
         } catch {}
 
-        return { type: "input_text", text: "Success" };
+        return AIAgent.createTextResponseOutput("Success");
     },
 
     async typeIntoElement({ selector, text }) {
         await state.page.type(selector, text);
-        return { type: "input_text", text: "Success" };
+        return AIAgent.createTextResponseOutput("Success");
     },
 
     async queryElement({ description }) {
         const output = await state.domAi.ask(`Do a snapshot first. ${description}`);
-        return { type: "input_text", text: output };
+        return AIAgent.createTextResponseOutput(output);
     },
 };
 
@@ -327,6 +322,9 @@ class AIAgent {
             call_id: callId,
             output,
         };
+    }
+    static createTextResponseOutput(text) {
+        return { type: "input_text", text };
     }
 
     constructor(cfg) {
