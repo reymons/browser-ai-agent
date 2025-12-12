@@ -414,7 +414,7 @@ class AIAgent {
 
                     if (!toolFn) {
                         const input = AIAgent.createToolInput(tool.call_id, [
-                            createErrorInput("Unsupported tool"),
+                            AIAgent.createErrorInput("Unsupported tool"),
                         ]);
                         this.input.push(input);
                         continue;
