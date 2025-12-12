@@ -504,7 +504,7 @@ async function main() {
 
     state.browser = await chromium.launch({
         headless: false,
-        executablePath: chromeBinPath
+        executablePath: chromeBinPath,
         args: ["--disable-gpu"],
     });
 
